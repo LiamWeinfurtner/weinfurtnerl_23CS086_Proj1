@@ -10,6 +10,7 @@ Commands:
 """
 
 from Item import Item
+from decimal import Decimal
 
 class Vendor:
     
@@ -42,7 +43,7 @@ class Vendor:
         Returns:
             Double: The total value in dollars and cents.
         """
-        total = dollars*1 + quarters*.25 + dimes*.10 + nickels*.05 + pennies*.01
+        total = Decimal(dollars)*1 + Decimal(quarters)*.25 + Decimal(dimes)*.10 + Decimal(nickels)*.05 + Decimal(pennies)*.01
         return total
     
     def fetchItem(self, itemName):
@@ -55,7 +56,7 @@ class Vendor:
             Item: Item object if found, None if not.
         """
         for item in self.inventory:
-            if item.name == itemName:
+            if item.name.lower() == itemName:
                 return item
         return None
 
@@ -141,7 +142,7 @@ class Vendor:
 
         # Check if item exists
         item = self.fetchItem(itemName)
-        if item.name == None:
+        if item == None:
             print("No such item. Please try again.")
         # Check if item is in stock
         elif item.quantity <= 0:
@@ -222,7 +223,7 @@ class Vendor:
         words = inputString.split()
 
         # Check if the input has the correct format
-        if len(words) != 5 or words[0] != 'add' or words[1] != 'item':
+        if len(words) != 5 or words[0] != 'add' or words[1] != "item":
             print("Invalid input format. Use 'add item <str> <int> <float>'.")
             return
 
@@ -240,3 +241,35 @@ class Vendor:
 
         except (ValueError, IndexError):
             raise ValueError("Invalid input format or data types.")
+        
+        
+    def parseItemBuy(self, inputString):
+        
+        # Split the input string into words
+        words = inputString.split()
+        
+        # Check if the input has the correct format
+        if len(words) != 8 or words[0] != "buy" or words[1] != "item":
+            print("Invalid input format. Use 'buy item <str> <int> <int> <int> <int> <int>")
+            return
+        
+        try:
+            name = words[2]
+            dollars = int(words[3])
+            quarters = int(words[4])
+            dimes = int(words[5])
+            nickels = int(words[6])
+            pennies = int(words[7])
+            
+            # Check data type validation
+            if not isinstance(name, str) or not isinstance(dollars, int) or not isinstance(quarters, int) or not isinstance(dimes, int) \
+                or not isinstance(nickels, int) or not isinstance(pennies, int):
+                    print("Invalid coin input format. Please enter the number of dollars, quarters, dimes, nickels, and pennies as integers.")
+                    return
+            
+            return name, dollars, quarters, dimes, nickels, pennies
+        
+        except (ValueError, IndexError):
+            raise ValueError("Invalid input format or data types.")
+            
+            

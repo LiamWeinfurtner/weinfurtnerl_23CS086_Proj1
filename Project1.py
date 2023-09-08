@@ -5,13 +5,13 @@ from Item import Item
 machine = Vendor()
 
 # Add two items to begin with
-machine.addItem("Mountain Dew", 5, 2.99)
-machine.addItem("Coke Zero", 3, 3.19)
+machine.addItem("Mountain_Dew", 5, 2.99)
+machine.addItem("Coke_Zero", 3, 3.19)
 
 # Create user input loop
 while True:
     # Display a prompt and get user input
-    user_input = input("Enter a command (or 'exit' to quit): ")
+    user_input = input("Enter a command or type 'Help' for a list of commands (or 'exit' to quit): ")
     user_input = user_input.lower()
     user_input_split = user_input.split()
     
@@ -37,7 +37,21 @@ while True:
             machine.commandHistory.append(user_input)
             
     elif user_input == "help":
-        print("I need the help, not you")
+        print("Commands")
+        print("balance")
+        print("    - Shows vendor balance")
+        print("history")
+        print("    - Shows command history")
+        print("inventory")
+        print("    - Shows vendor inventory and prices")
+        print("add item <name str> <qty int> <price float>")
+        print("    - Add an item to the vendor inventory")
+        print("buy item <name str> <dollars int> <quarters int> <dimes int> <nickels int> <pennies int>")
+        print("    - Buys an item with dollars, quarters, dimes, nickels, and pennies. Dispenses change.")
+        print("help")
+        print("    - Prints a help menu with these commands")
+        print("exit")
+        print("    - Exit the console")
                   
     elif (len(user_input_split) == 5):
         if (user_input_split[0] == "add") & (user_input_split[1] == "item"):
@@ -45,10 +59,15 @@ while True:
             machine.addItem(newItem[0], newItem[1], newItem[2])
             machine.commandHistory.append(user_input)
             
-    #FIXME: Need to add the buy item command
+    elif (len(user_input_split) == 8):
+        if (user_input_split[0] == "buy") & (user_input_split[1] == "item"):
+            buyItem = machine.parseItemBuy(user_input)
+            machine.buyItem(buyItem[0], buyItem[1], buyItem[2], buyItem[3], buyItem[4], buyItem[5])
+            machine.commandHistory.append(user_input)
+            
+            
     #FIXME: I need to check for add item duplicates
     #FIXME: Check for spaces in add item and buy item name strings
-    #FIXME: I think spaces for all names are just going to have to be underscores, limit user to underscores
     #FIXME: Fix the dang help menu to be formatted nicely somehow
     
     else:
