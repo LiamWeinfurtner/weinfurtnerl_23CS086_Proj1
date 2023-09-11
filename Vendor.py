@@ -68,7 +68,13 @@ class Vendor:
             quantity (Int): Quantity of item being added.
             cost (Double): Cost of the item.
         """
+        
+        if self.fetchItem(name) != None:
+            print("Item already exists.")
+            return
+        
         self.inventory.append(Item(name, quantity, cost))
+        print("Item successfully added.")
 
     def calculateChange(self, cost, dollars, quarters, dimes, nickels, pennies):
         """Calculates the number of coins in change required given a cost and customer deposited money.
@@ -250,7 +256,7 @@ class Vendor:
         
         # Check if the input has the correct format
         if len(words) != 8 or words[0] != "buy" or words[1] != "item":
-            print("Invalid input format. Use 'buy item <str> <int> <int> <int> <int> <int>")
+            print("Invalid input format or item does not exist. Use 'buy item <str> <int> <int> <int> <int> <int>")
             return
         
         try:

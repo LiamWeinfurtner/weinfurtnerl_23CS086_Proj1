@@ -17,7 +17,7 @@ while True:
     
     # Check if the user wants to exit the loop
     if user_input == "exit":
-        print("Thank you for shopping with us.")
+        print("Thank you for shopping with us!")
         break  # Exit the loop
 
     # Process the user commands
@@ -52,6 +52,7 @@ while True:
         print("    - Prints a help menu with these commands")
         print("exit")
         print("    - Exit the console")
+        machine.commandHistory.append(user_input)
                   
     elif (len(user_input_split) == 5):
         if (user_input_split[0] == "add") & (user_input_split[1] == "item"):
@@ -67,8 +68,6 @@ while True:
             
             
     #FIXME: I need to check for add item duplicates
-    #FIXME: Check for spaces in add item and buy item name strings
-    #FIXME: Fix the dang help menu to be formatted nicely somehow
     
     else:
         print("Error. Invalid command. Please try again.")
