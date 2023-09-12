@@ -55,18 +55,24 @@ while True:
         machine.commandHistory.append(user_input)
                   
     elif (len(user_input_split) == 5):
-        if (user_input_split[0] == "add") & (user_input_split[1] == "item"):
+        if ((user_input_split[0] == "add") & (user_input_split[1] == "item")) or ((user_input_split[0] == "item") & (user_input_split[1] == "add")):
             newItem = machine.parseItemAdd(user_input)
-            machine.addItem(newItem[0], newItem[1], newItem[2])
-            machine.commandHistory.append(user_input)
+            if newItem != None:
+                machine.addItem(newItem[0], newItem[1], newItem[2])
+                machine.commandHistory.append(user_input)
+        else: 
+            print("Invalid format, please use 'add item <name> <quantity> <price>' excluding any $ sign.")
+
             
     elif (len(user_input_split) == 8):
-        if (user_input_split[0] == "buy") & (user_input_split[1] == "item"):
+        if ((user_input_split[0] == "buy") & (user_input_split[1] == "item")) or ((user_input_split[0] == "item") & (user_input_split[1] == "buy")):
             buyItem = machine.parseItemBuy(user_input)
             # If format not wrong, buyItem
             if buyItem != None:
                 machine.buyItem(buyItem[0], buyItem[1], buyItem[2], buyItem[3], buyItem[4], buyItem[5])
                 machine.commandHistory.append(user_input)
+            else:
+                print("Invalid format, please use 'buy item <name> <dollars> <quarters> <dimes> <nickels> <pennies>' excluding any $ signs.")
             
     else:
         print("Error. Invalid command. Please try again.")

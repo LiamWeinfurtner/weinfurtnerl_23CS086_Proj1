@@ -10,7 +10,7 @@ Commands:
 """
 
 from Item import Item
-from decimal import Decimal
+from decimal import *
 
 class Vendor:
     
@@ -43,7 +43,7 @@ class Vendor:
         Returns:
             Double: The total value in dollars and cents.
         """
-        total = Decimal(dollars)*1 + Decimal(quarters)*.25 + Decimal(dimes)*.10 + Decimal(nickels)*.05 + Decimal(pennies)*.01
+        total = round(dollars*1, 2) + round(quarters*.25, 2) + round(dimes*.10,2 ) + round(nickels*.05, 2) + round(pennies*.01, 2)
         return total
     
     def fetchItem(self, itemName):
@@ -133,7 +133,7 @@ class Vendor:
             'Pennies' : change_pennies
         }
 
-    def buyItem(self, itemName, dollars, quarters, dimes, nickels, pennies):
+    def buyItem(self, itemName:str, dollars:int, quarters:int, dimes:int, nickels:int, pennies:int):
         """Purchases an item from the vendor if it exists, the customer has enough money, and the vendor can dispense the appropriate amount of change.
 
         Args:
@@ -177,8 +177,9 @@ class Vendor:
                 self.coins['Nickels']  -= int(nickels)
                 self.coins['Pennies']  -= int(pennies)
             else:
-                print("Funds accepted, dispensing " + itemName + ". Thank you for your purchase.")
-                # Dispense customer change
+                print("Funds accepted, dispensing " + itemName + ". Here is your change:")
+                print(changeRequired)
+                # Dispense customer change, subtract from vendor balance
                 self.coins['Dollars']  -= int(changeRequired["Dollars"])
                 self.coins['Quarters'] -= int(changeRequired["Quarters"])
                 self.coins['Dimes']    -= int(changeRequired["Dimes"])
@@ -187,7 +188,8 @@ class Vendor:
                 self.fetchItem(itemName).quantity -= 1
 
     def displayBalance(self):
-        
+        """Prints amount of dollars and coins stored in the vendor.
+        """
         print(self.coins)
         
     def displayHistory(self):
