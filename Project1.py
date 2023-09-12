@@ -63,12 +63,11 @@ while True:
     elif (len(user_input_split) == 8):
         if (user_input_split[0] == "buy") & (user_input_split[1] == "item"):
             buyItem = machine.parseItemBuy(user_input)
-            machine.buyItem(buyItem[0], buyItem[1], buyItem[2], buyItem[3], buyItem[4], buyItem[5])
-            machine.commandHistory.append(user_input)
+            # If format not wrong, buyItem
+            if buyItem != None:
+                machine.buyItem(buyItem[0], buyItem[1], buyItem[2], buyItem[3], buyItem[4], buyItem[5])
+                machine.commandHistory.append(user_input)
             
-            
-    #FIXME: I need to check for add item duplicates
-    
     else:
         print("Error. Invalid command. Please try again.")
 

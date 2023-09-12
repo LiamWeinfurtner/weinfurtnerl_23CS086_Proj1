@@ -271,7 +271,12 @@ class Vendor:
             if not isinstance(name, str) or not isinstance(dollars, int) or not isinstance(quarters, int) or not isinstance(dimes, int) \
                 or not isinstance(nickels, int) or not isinstance(pennies, int):
                     print("Invalid coin input format. Please enter the number of dollars, quarters, dimes, nickels, and pennies as integers.")
-                    return
+                    return None
+                
+            # Check if someone decided to be funny and use negatives
+            if dollars < 0 or quarters < 0 or dimes < 0 or nickels < 0 or pennies < 0:
+                print("Please enter positive values for your demoninations.")
+                return None
             
             return name, dollars, quarters, dimes, nickels, pennies
         
